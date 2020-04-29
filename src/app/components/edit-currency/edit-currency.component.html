@@ -1,0 +1,35 @@
+<form [formGroup]="currencyForm" (submit)="onSubmit()">
+  <div class="form-group row justify-content-center">
+    <label for="code" class="col-sm-3 col-form-label text-nowrap">Code</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control-plaintext border-bottom" id="code" formControlName="code">
+    </div>
+    <div class="w-100"></div>
+    <div class="error text-danger text-center" *ngIf="isControlInvalid('code')">
+      Code should contain only letters<br>Min 1 and Max 10 letters
+    </div>
+  </div>  <div class="form-group row justify-content-center">
+  <label for="name" class="col-sm-3 col-form-label text-nowrap">Name</label>
+  <div class="col-sm-6">
+    <input type="text" class="form-control-plaintext border-bottom" id="name" formControlName="name">
+  </div>
+  <div class="w-100"></div>
+  <div class="error text-danger text-center" *ngIf="isControlInvalid('name')">
+    Code should contain only letters<br>Min 1 and Max 25 letters
+  </div>
+</div>
+  <div class="form-group row justify-content-center">
+    <label for="rate" class="col-sm-3 col-form-label text-nowrap">Rate</label>
+    <div class="col-sm-6">
+      <input type="number" class="form-control-plaintext border-bottom" id="rate" formControlName="rate">
+    </div>
+    <div class="w-100"></div>
+    <div class="error text-danger text-center" *ngIf="isControlInvalid('rate')">
+      Rate should contain only numbers and can only be positive.<br>Min 1 number
+    </div>
+  </div>
+  <div class="modal-footer border-top-0">
+    <button type="submit" class="btn btn-warning text-nowrap">Save</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+  </div>
+</form>

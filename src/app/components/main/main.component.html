@@ -1,0 +1,144 @@
+<div class="d-flex justify-content-center">
+  <div class="row d-inline shadow border-light p-3">
+    <div class="col pb-3 pt-3 d-flex justify-content-center">
+      <a href="#" class="badge badge-pill badge-warning border-0 pt-2 pb-2 pl-4 pr-4 font-weight-bold disabled">
+        <h2>EUR currency exchange</h2>
+      </a>
+    </div>
+    <div class="w-100"></div>
+    <div class="col pb-3 pt-3 d-flex justify-content-left">
+      <div class="d-flex fixed-row align-text-bottom">
+        <div class="col-md-auto align-bottom pt-2 mr-0 pr-2 text-right">EURO</div>
+        <div class="col-md-auto align-bottom pt-2 pl-0 mr-0 pr-2 text-right">:</div>
+        <div class="col-md-auto ml-0 pl-0 mr-0 pr-0">
+          <input class="form-control-plaintext w-25 simple-box border-bottom pb-0 mb-0 pr-0 mr-0" [(ngModel)]="eurCount"
+                 style="min-width: 80px; max-width: 80px"
+                 type="number" aria-label="euro">
+        </div>
+        <div class="col-md-auto align-bottom pt-2 mr-0 pr-2 ml-0 pl-2 text-right">TO</div>
+        <div class="col-md-auto ml-0 pl-0 mr-0 pr-0 " style="width: 100px">
+          <ng-select
+            class="custom"
+            [items]="currencies"
+            bindLabel="code"
+            bindValue="rate"
+            placeholder="choose"
+            [(ngModel)]="chosenCurrencyRate"></ng-select>
+        </div>
+        <div class="col-md-auto align-bottom pt-0 mr-0 ml-2 pl-2 pr-1 text-right">
+          <button type="button" class="btn btn-warning btn-sm pt-0 mt-0" style="font-size: 20px" (click)="calculate()">
+            <b>=</b>
+          </button>
+        </div>
+        <div class="col-md-auto align-bottom pt-2 mr-0 pr-1 text-right">
+          {{result | number: '.2'}}
+        </div>
+        <div class="col-md-auto"></div>
+      </div>
+    </div>  <div class="w-100"></div>
+    <div class="col pb-3 pt-3 d-flex justify-content-left">
+      <div class="d-flex fixed-row align-text-bottom">
+        <div class="col-md-auto ml-0 pl-0 mr-0 pr-0" style="width: 100px">
+          <ng-select
+            class="custom"
+            [items]="currencies"
+            bindLabel="code"
+            bindValue="rate"
+            placeholder="choose"
+            [(ngModel)]="chosenCurrencyRateFrom"></ng-select>
+        </div>
+        <div class="col-md-auto align-bottom pt-2 mr-0 pr-0 ml-0 pl-2 text-right">:</div>
+        <div class="col-md-auto ml-2 pl-2 mr-0 pr-0">
+          <input class="form-control-plaintext w-25 simple-box border-bottom pb-0 mb-0 pr-0 mr-0" [(ngModel)]="otherCurCount"
+                 style="min-width: 80px; max-width: 80px"
+                 type="number" aria-label="euro2">
+        </div>
+        <div class="col-md-auto align-bottom pt-2 mr-0 pr-0 ml-0 pl-2 text-right">TO</div>
+        <div class="col-md-auto align-bottom pt-2 mr-0 pr-0 text-right">EURO</div>
+        <div class="col-md-auto align-bottom pt-0 mr-0 ml-2 pl-2 pr-1 text-right">
+          <button type="button" class="btn btn-warning btn-sm pt-0 mt-0" style="font-size: 20px" (click)="calculateFrom()">
+            <b>=</b>
+          </button>
+        </div>
+        <div class="col-md-auto align-bottom pt-2 mr-0 pr-1 text-right">
+          {{resultFrom | number: '.2'}}
+        </div>
+        <div class="col-md-auto"></div>
+      </div>
+    </div>
+    <div class="w-100"></div>
+    <div class="col-md-auto table-responsive-xl">
+      <table class="table" style="width: 500px">
+        <thead>
+        <tr>
+          <th scope="col" colspan="2" class="border-0 text-left">
+            <input class="form-control-plaintext w-25 simple-box border-bottom" [(ngModel)]="search" style="min-width: 150px"
+                   type="text" placeholder="Filter ..." aria-label="Search">
+          </th>
+          <th scope="col" colspan="2" class="border-0 text-right">
+            <button type="button" class="btn badge-pill btn-light btn-sm  p-2 m-0 p-0"
+                    data-toggle="modal" data-target="#clientModal"
+                    (click)="setModalType(modalType.New);">Add new</button>
+          </th>
+        </tr>
+        <tr>
+          <th scope="col" class="border-0 text-left text-nowrap font-weight-normal" style="font-size: 11px" colspan="4">Valid on: {{validOnTime}}</th>
+        </tr>
+        <tr>
+          <th scope="col" class="border-0" style="max-width: 100px; min-width: 100px">Code</th>
+          <th scope="col" class="border-0" style="max-width: 250px; min-width: 250px">Name</th>
+          <th scope="col" class="border-0 text-right" style="max-width: 100px; min-width: 100px">Rate</th>
+          <th scope="col" class="border-0" style="max-width: 50px; min-width: 50px"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let currency of currencies | arrayFilter: search | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+          <th scope="row" class="text-nowrap">{{currency.code}}</th>
+          <td class="">{{currency.name}}</td>
+          <td class="text-nowrap text-right">{{currency.rate}}</td>
+          <td class="text-nowrap text-right">
+            <button type="button" class="btn btn-light btn-sm m-0 p-0"
+                    data-toggle="modal" data-target="#clientModal"
+                    (click)="
+                  setModalType(modalType.Edit);
+                  setCurrentCurrency(currency);
+                  notifyCurrencyComp(currency);
+                  ">Edit</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="w-100"></div>
+    <div class="col pb-3 pt-3 d-flex justify-content-center pl-0 ml-0">
+      <div class="fixed-row pr-5">
+        <div class="col-md-auto ml-0 pl-0 mr-0 pr-5" style="width: 100px">
+          <ngb-pagination
+            [(page)]="page"
+            [pageSize]="pageSize"
+            [collectionSize]="currencies.length"></ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="clientModal" tabindex="-1" role="dialog" aria-labelledby="clientModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{modal}} currency</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div *ngIf="modal === modalType.New; else editBlock" class="modal-body">
+        <app-new-currency></app-new-currency>
+      </div>
+      <ng-template #editBlock>
+        <div class="modal-body">
+          <app-currency-edit></app-currency-edit>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
