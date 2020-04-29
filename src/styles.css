@@ -1,34 +1,62 @@
 @import "~@ng-select/ng-select/themes/default.theme.css";
 
-.paginator {
-  font-family: 'Lato', sans-serif;
-  font-size: 15px;
-  padding-bottom: 0;
-  margin-bottom: 0;
+
+ngb-pagination .pagination {
+  display: flex;
+  padding-left: 0;
+  list-style: none;
+  border-radius: .25rem;
 }
-
-.paginator .ngx-pagination .current {
-  background: #ffc107 !important;;
-  border-radius: 4px;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-
-.paginator  .ngx-pagination a:hover, .ngx-pagination button:hover {
-  background: #f8f9fa!important;
-  border-radius: 4px;
-  padding-left: 10px;
-  padding-right: 10px;
+ngb-pagination .page-link:hover {
+  z-index: 2;
+  color: #ffc107;
   text-decoration: none;
-}
-
-.paginator .ngx-pagination a:focus, .ngx-pagination button:focus {
+  background-color: transparent;
+  border-color: transparent;
   outline: none;
-  border-radius: 4px;
-  background: #f8f9fa!important;
+  box-shadow: none !important;
+  -webkit-appearance: none;
+}
+ngb-pagination .page-link {
+  position: relative;
+  display: block;
+  padding: .5rem .75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: black;
+  background-color: transparent;
+  border-color: transparent;
+  outline: none;
+  box-shadow: none !important;
+  -webkit-appearance: none;
 }
 
+ngb-pagination .page-item.active .page-link {
+  z-index: 1;
+  color: #fff;
+  background-color: #ffc107;
+  border-color: #ffc107;
+  outline: none;
+  box-shadow: none !important;
+  -webkit-appearance: none;
+}
+ngb-pagination .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+ngb-pagination .page-item.disabled .page-link {
+  color: #6c757d;
+  pointer-events: none;
+  cursor: auto;
+  background-color: transparent;
+  border-color: transparent;
+}
 .simple-box {
   outline: none;
   -webkit-box-shadow: none !important;
