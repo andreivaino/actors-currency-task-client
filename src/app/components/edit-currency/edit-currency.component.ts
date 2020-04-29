@@ -25,10 +25,12 @@ export class EditCurrencyComponent implements OnInit {
     this.subscriptionForMainComp = this.componentObserverService.notifyEditCurrency.
     subscribe(res => {
       this.currency = res;
+      this.initCurrency();
       this.initForm();
     });
-    this.initCurrency();
-    this.initForm();
+    if (this.currency) {
+      this.initForm();
+    }
   }
 
   initCurrency() {
